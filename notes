@@ -1,0 +1,53 @@
+When designing a database schema:
+- What fields, or columns does a table need?
+- What type of data do we expect for each column?
+- Are there any restrictions or constraints needed for each column?
+
+// Insert new row
+INSERT INTO "fruits" ("name", "avgWeightOz", "delicious", "color")
+VALUES ('strawberry', "0.42", true, 'red');
+
+
+
+Data Definition Language (DDL)
+---------------------------------------------------------------
+CREATE TABLE <table name> (
+    <column> <column type> <constraints>,
+    <column> <column type> <constraints>
+);
+
+CREATE TABLE IF NOT EXISTS "fruits" (
+"id" INTEGER  NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, 
+"name" TEXT NOT NULL UNIQUE,
+"avgWeightOz" FLOAT NOT NULL,
+"delicious" BOOLEAN NOT NULL DEFAULT true,
+"color" TEXT 
+);
+
+ALTER TABLE <table name> <stuff to change>;
+ALTER TABLE IF EXISTS "fruits" ADD COLUMN "tropical" BOOLEAN DEFAULT false;
+
+DROP TABLE IF EXISTS <table name>; //deletes table
+
+Create Knex file
+npx knex init
+
+
+
+Schema (Database) Migrations
+------------------------------
+migrations/migration1.js
+    creates the fruits table
+
+migrations/migrations2.js   
+    - adds a column to the fruits table 
+    - removes a default value from an existing column
+
+migrations/migrations3.js   
+    - create new vegetables table   
+    - deletes a column from the fruits table
+
+npx knex migrate:make fruits
+npx knex migrate:latest
+npx knex migrate:rollback
+npx knex seed:make fruits
